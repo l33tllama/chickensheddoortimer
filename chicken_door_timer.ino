@@ -15,18 +15,31 @@
  */
 #include <LiquidCrystal.h>
 #include <Wire.h>
+#include <Button.h>
 #include "RTClib.h"
 
+// Pins
 #define PIN_ENC_A 7
 #define PIN_ENC_B 8
 #define PIN_ENC_BTN 6 
 #define PIN_PIEZO 9
 
-#define STATE_MENU_MAIN 0x01
-#define STATE_MENU_MANUAL_CONTROL 0x02
-#define STATE_MENU_TIME_SET 0x03
-#define STATE_MENU_OPEN_TIME_SET 0x05
-#define STATE_MENU_CLOSE_TIME_SET 0x0
+// Button settings
+#define DEBOUNCE_MS 20
+#define PULLUP false
+#define INVERT false
+
+// Encoder states
+#define ENC_SAME 0
+#define ENC_INC 1
+#define ENC_DEC 2
+
+// Menu states
+#define STATE_MAIN_MENU 0x01
+#define STATE_MANUAL_CONTROL 0x02
+#define STATE_OPEN_TIME_SET 0x03
+#define STATE_CLOSE_TIME_SET 0x04
+#define STATE_TIME_SET 0x05
 #define MENU_COUNT 4
 
 int encoderPos = 0;
@@ -34,6 +47,7 @@ int lastEncoderPos = 0;
 int encoderPinALast = LOW;
 int n = LOW;
 int menuPos = 0;
+int menuState = STATE_MAIN_MENU;
 
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", 
   "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -41,9 +55,18 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday",
 char menuList[MENU_COUNT][16] = {"Manual control", "Set open time", 
   "Set close time", "Change time" };
 
+Button menuButton(PIN_ENC_BTN, PULLUP, INVERT, DEBOUNCE_MS);
+
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 RTC_DS1307 rtc;
+
+// TODO: TimeLord - auto sunrise+sunset would be pretty good I reckon..
+// * Manual control
+// * check open time - later add override
+// * check close time - later add override
+// * set date + time
+// * set timezone (by GMT) - later by country and state..
 
 void setup(){
   
@@ -73,7 +96,7 @@ void setup(){
   lcd.print("Door Timer ");
   lcd.setCursor(0, 1);
   lcd.print("by Leo Febey");
-  delay(1000);
+  delay(100);
   lcd.clear();
 
   DateTime now = rtc.now();
@@ -94,7 +117,7 @@ void setup(){
   showMenu();
   
 }
-inline void readEncoderPos(){
+inline int encoderPosRead(){
   lastEncoderPos = encoderPos;
   n = digitalRead(PIN_ENC_A);
    if ((encoderPinALast == LOW) && (n == HIGH)) {
@@ -107,6 +130,17 @@ inline void readEncoderPos(){
      Serial.println ("/");
    } 
    encoderPinALast = n;
+    if(encoderPos == lastEncoderPos){
+      return ENC_SAME;
+    } else if (encoderPos > lastEncoderPos){
+      Serial.println("Inc");
+      
+      return ENC_INC;
+    } else if (encoderPos < lastEncoderPos){
+      Serial.println("Dec");
+      return ENC_DEC;
+    }
+   return ENC_SAME;
 }
 
 void showMenu(){
@@ -130,16 +164,76 @@ void showMenu(){
     lcd.print(" ");
     lcd.print(menuList[0]);
   }
-}
   
-void loop(){
-  readEncoderPos();
-  if (lastEncoderPos > encoderPos){
-    menuPos = (menuPos + 1) % (MENU_COUNT);
-    Serial.print("Menu item: ");
-    Serial.println(menuPos);
-    showMenu();
-  } else if (lastEncoderPos < encoderPos){
+}
+
+void checkMainMenuButonPress(){
+  menuButton.read();
+  if(menuButton.wasReleased()){
+    Serial.println("Menu button pressed.. once..?");
+    switch(menuPos){
+      case 0:
+        Serial.println("Entering Manual Control..");
+        menuState = STATE_MANUAL_CONTROL;
+        break;
+      case 1:
+        Serial.println("Entering set open time..");
+        menuState = STATE_OPEN_TIME_SET;
+        break;
+      case 2:
+        Serial.println("Entering set close time..");
+        menuState = STATE_CLOSE_TIME_SET;
+        break;
+       case 3:
+        Serial.println("Entering set date+time..");
+        showChangeTimeMenu();
+        menuState = STATE_TIME_SET;
+        break;
+       default:
+        Serial.print("Menu pos out of bounds: ");
+        Serial.println(menuPos);
+        break;
+    }
+  }
+}
+
+void showManualControlMenu(){
+  
+}
+
+void showOpenTimeMenu(){
+  
+}
+
+void showCloseTimeMenu(){
+  
+}
+
+void changeTimeLoop(){
+  int encoderPosState = encoderPosRead();
+  if(encoderPosState == ENC_INC){
+    showChangeTimeMenu();
+  } else if (encoderPosState == ENC_DEC) {
+    showChangeTimeMenu2();
+  }
+}
+
+void showChangeTimeMenu(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Set [Date]|Time");
+  lcd.setCursor(1, 0);
+}
+void showChangeTimeMenu2(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Set Date|[Time]");
+  lcd.setCursor(1, 0);
+}
+
+void mainMenuLoop(){
+  int encoderPosState = encoderPosRead();
+  if(encoderPosState == ENC_INC){
     if (menuPos == 0){
       menuPos = MENU_COUNT - 1;
     } else {
@@ -148,6 +242,34 @@ void loop(){
     Serial.print("Menu item: ");
     Serial.println(menuPos);
     showMenu();
+  } else if (encoderPosState == ENC_DEC) {
+    menuPos = (menuPos + 1) % (MENU_COUNT);
+    Serial.print("Menu item: ");
+    Serial.println(menuPos);
+    showMenu();
   }
+  
+}
+  
+void loop(){
+
+  switch (menuState){
+    case STATE_MAIN_MENU:
+      mainMenuLoop();
+      checkMainMenuButonPress();
+      break;
+    case STATE_MANUAL_CONTROL:
+      // do stuff
+      break;
+    case STATE_OPEN_TIME_SET:
+      // do stuff
+      break;
+    case STATE_CLOSE_TIME_SET:
+      // Do stuff
+      break;
+    case STATE_TIME_SET:
+      changeTimeLoop();
+      break;
+  } 
   __asm__ volatile("nop");
 }

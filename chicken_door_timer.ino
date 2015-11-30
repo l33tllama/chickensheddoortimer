@@ -39,8 +39,11 @@
 #define STATE_MANUAL_CONTROL 0x02
 #define STATE_OPEN_TIME_SET 0x03
 #define STATE_CLOSE_TIME_SET 0x04
-#define STATE_TIME_SET 0x05
+#define STATE_DATETIME_SET 0x05
 #define MENU_COUNT 4
+
+#define STATE_DATE_SET 0x00
+#define STATE_TIME_SET 0x01
 
 int encoderPos = 0;
 int lastEncoderPos = 0;
@@ -48,6 +51,7 @@ int encoderPinALast = LOW;
 int n = LOW;
 int menuPos = 0;
 int menuState = STATE_MAIN_MENU;
+int datetimeState = STATE_DATE_SET;
 
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", 
   "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -187,7 +191,7 @@ void checkMainMenuButonPress(){
        case 3:
         Serial.println("Entering set date+time..");
         showChangeTimeMenu();
-        menuState = STATE_TIME_SET;
+        menuState = STATE_DATETIME_SET;
         break;
        default:
         Serial.print("Menu pos out of bounds: ");
@@ -210,10 +214,24 @@ void showCloseTimeMenu(){
 }
 
 void changeTimeLoop(){
+  
+  menuButton.read();
+  if(menuButton.wasReleased()){
+    if(datetimeState == STATE_DATE_SET){
+      lcd.setCursor(0,1);
+      lcd.print("01/01/2015  OK");
+    } else if(datetimeState == STATE_TIME_SET){
+      lcd.setCursor(0, 1);
+      lcd.print("00:00:00 AM OK");
+    }
+    // TODO: change date/time loop
+  }
   int encoderPosState = encoderPosRead();
   if(encoderPosState == ENC_INC){
+    datetimeState = STATE_DATE_SET;
     showChangeTimeMenu();
   } else if (encoderPosState == ENC_DEC) {
+    datetimeState = STATE_TIME_SET;
     showChangeTimeMenu2();
   }
 }
@@ -222,13 +240,11 @@ void showChangeTimeMenu(){
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Set [Date]|Time");
-  lcd.setCursor(1, 0);
 }
 void showChangeTimeMenu2(){
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Set Date|[Time]");
-  lcd.setCursor(1, 0);
 }
 
 void mainMenuLoop(){
@@ -267,7 +283,7 @@ void loop(){
     case STATE_CLOSE_TIME_SET:
       // Do stuff
       break;
-    case STATE_TIME_SET:
+    case STATE_DATETIME_SET:
       changeTimeLoop();
       break;
   } 

@@ -1,34 +1,49 @@
-#ifndef _SUN_MOON_TIME_H_
-#define _SUN_MOON_TIME_H_
+#ifndef __SUN_MOON_TIME_H_
+#define __SUN_MOON_TIME_H_
 
 #define RAD_TO_DEGREE 57.29577951308233
 
 #include <math.h>
-#include <Time.h>
+#include <time.h>
 
-enum AUS_LOCATIONS_KEY {
-  CANBERRA_ACT,
-  NEWCASTLE_NSW,
-  PORT_MACQUARIE_NSW,
-  SYDNEY_NSW,
-  ALICE_SPRINGS_NT,
-  CAIRNS_NT,
-  DARWIN_NT,
-  BRISBAVE_QLD,
-  GOLD_CAOST_QLD,
-  MACKAY_QLD,
-  TOWNSVILLE_QLD,
-  ADELAIDE_SA,
-  GERALDTON_WA,
-  KALGOORLIE_WA,
-  PERTH_WA,
-  PORT_HEDLAND_WA,
-  HOBART_TAS,
-  LAUNCESTON_TAS,
-  MELBOURNE_VIC,
-};
+#ifdef __cplusplus
+extern "C" 
+{
+#endif
 
-double latitude_by_aus_loc = [
+  typedef enum AUS_LOCATIONS_KEY {
+    CANBERRA_ACT,
+    NEWCASTLE_NSW,
+    PORT_MACQUARIE_NSW,
+    SYDNEY_NSW,
+    ALICE_SPRINGS_NT,
+    CAIRNS_NT,
+    DARWIN_NT,
+    BRISBAVE_QLD,
+    GOLD_CAOST_QLD,
+    MACKAY_QLD,
+    TOWNSVILLE_QLD,
+    ADELAIDE_SA,
+    GERALDTON_WA,
+    KALGOORLIE_WA,
+    PERTH_WA,
+    PORT_HEDLAND_WA,
+    HOBART_TAS,
+    LAUNCESTON_TAS,
+    MELBOURNE_VIC,
+  } AUS_LOC_t; 
+
+  void setLocation(AUS_LOC_t loc);
+  
+  double SolarAzimuth(time_t * point_in_time);
+  
+  void SolarPosition(time_t * point_in_time, double * Azimuth, double * Altitude);
+
+#ifdef __cplusplus
+}
+#endif
+
+static double latitude_by_aus_loc[] = {
   -35.2834625,
   -32.9271484,
   -31.4333333,
@@ -48,9 +63,8 @@ double latitude_by_aus_loc = [
   -42.9166667,
   -41.45,
   -37.8139966,
-];
-double SolarAzimuth(time_t * point_in_time);
+};
 
-void SolarPosition(time_t * point_in_time, double * Azimuth, double * Altitude);
+static double Latitude;
 
 #endif

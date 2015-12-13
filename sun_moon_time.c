@@ -1,4 +1,6 @@
 #include "sun_moon_time.h"
+#include <time.h>
+#include <math.h>
 
 double SolarAzimuth(time_t * point_in_time){
   time_t noon = solar_noon(point_in_time) % ONE_DAY;      // time of noon mod one day
@@ -37,5 +39,11 @@ void SolarPosition(time_t * point_in_time, double * Azimuth, double * Altitude){
   *Azimuth = atan ( sin(HourAngle) / ( CosHourAngle * SinLatitude - tan(Declination ) * CosLatitude ) );
   *Altitude = asin( CosHourAngle * cos(Declination) * CosLatitude + sin(Declination) * SinLatitude );
 
+}
+
+void setLocation(AUS_LOC_t loc){
+  double lon = 0.0d;
+  double lat = latitude_by_aus_loc[loc];
+  set_position(lat, lon); 
 }
 

@@ -16,6 +16,8 @@
 #include <LiquidCrystal.h>
 #include <Wire.h>
 #include <Button.h>
+#include "time.h"
+#include "sun_moon_time.h"
 #include "RTClib.h"
 
 // Pins
@@ -65,6 +67,10 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 RTC_DS1307 rtc;
 
+struct tm * time_from_rtc;
+time_t * rtc_time;
+
+
 // TODO: TimeLord - auto sunrise+sunset would be pretty good I reckon..
 // * Manual control
 // * check open time - later add override
@@ -87,6 +93,9 @@ void setup(){
     Serial.println("RTC is not running! PANIC!");
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   }
+
+  // comment out to set time and date
+   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   
   // setup piezo
   
@@ -118,6 +127,34 @@ void setup(){
   Serial.print(" : ");
   Serial.print(now.second(), DEC);
   Serial.print("\n");
+
+  // Set location using time.h library for later sunrise/sunset calculation
+  // TODO in later firmware update - set location menu
+  setLocation(HOBART_TAS);
+
+  time_from_rtc = localtime(rtc_time);
+  time_from_rtc->tm_sec = now.second();
+  time_from_rtc->tm_min = now.minute();
+  time_from_rtc->tm_hour = now.hour();
+  time_from_rtc->tm_mday = now.day();
+  time_from_rtc->tm_mon = now.month() - 1; // 0-11
+  time_from_rtc->tm_year = now.year() - 1900; // years since 1900
+
+  //rtc_time = mktime(time_from_rtc);
+
+  //time_t * tm_ptr = &rtc_time;
+
+  double * azimuth;
+  double * altitude;
+  SolarPosition(rtc_time, azimuth, altitude);
+  //= SolarAzimuth(rtc_time);
+
+  Serial.print("Solar Azumith: ");
+  Serial.println(*azimuth);
+  Serial.print("Solar Altitude: ");
+  Serial.println(*altitude);
+  
+  
   showMenu();
   
 }

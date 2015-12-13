@@ -1,0 +1,99 @@
+country,city,latitude,longitude,altitude,country,city,latitude,longitude,altitude,,
+Australia,Perth,-31.9333333,115.8333359,32,Australia,Canberra,-35.2834625,149.128067,609,ACT,0
+Australia,Adelaide,-34.9333333,138.6000061,65,Australia,Newcastle,-32.9271484,151.776474,1,NSW,1
+Australia,Brisbane,-27.4679357,153.0280914,15,Australia,Port Macquarie,-31.4333333,152.9166718,-9999,NSW,2
+Australia,Gold Coast,-28,153.4333344,1,Australia,Sydney,-33.86785,151.2073212,1,NSW,3
+Australia,Newcastle,-32.9271484,151.776474,1,Australia,Alice Springs,-23.7,133.8833313,609,NT,4
+Australia,Canberra,-35.2834625,149.128067,609,Australia,Cairns,-16.9166667,145.7666626,1,NT,5
+Australia,Wollongong,-34.4333333,150.8833313,26,Australia,Darwin,-12.4611337,130.8418427,-9999,NT,6
+Australia,Geelong,-38.1471126,144.3607025,-9999,Australia,Brisbane,-27.4679357,153.0280914,15,QLD,7
+Australia,Cairns,-16.9166667,145.7666626,1,Australia,Gold Coast,-28,153.4333344,1,QLD,8
+Australia,Geelong West,-38.1333333,144.3500061,-9999,Australia,Mackay,-21.15,149.1999969,-9999,QLD,9
+Australia,Townsville,-19.25,146.8000031,1,Australia,Townsville,-19.25,146.8000031,1,QLD,10
+Australia,Albury,-36.0833333,146.9166718,170,Australia,Adelaide,-34.9333333,138.6000061,65,SA,11
+Australia,Nowra,-34.8833333,150.6000061,1,Australia,Geraldton,-28.7666667,114.5999985,2,WA,12
+Australia,Darwin,-12.4611337,130.8418427,-9999,Australia,Kalgoorlie,-30.75,121.4666672,469,WA,13
+Australia,Toowoomba,-27.55,151.9666595,560,Australia,Perth,-31.9333333,115.8333359,32,WA,14
+Australia,Ballarat,-37.5666667,143.8500061,465,Australia,Port Hedland,-20.3166667,118.5666656,-9999,WA,15
+Australia,Bendigo,-36.7666667,144.2833405,234,Australia,Hobart,-42.9166667,147.3333282,151,TAS,16
+Australia,Mackay,-21.15,149.1999969,-9999,Australia,Launceston,-41.45,147.1666718,105,TAS,17
+Australia,Mandurah,-32.55,115.6999969,1,Australia,Melbourne,-37.8139966,144.9633179,58,VIC,18
+Australia,Launceston,-41.45,147.1666718,105,,,,,,,
+Australia,Rockhampton,-23.3833333,150.5,2,,,,,,,
+Australia,Coffs Harbour,-30.3,153.1333313,8,,,,,,,
+Australia,South Brisbane,-27.4833333,153.0166626,17,,,,,,,
+Australia,Wagga Wagga,-35.1166667,147.3666687,148,,,,,,,
+Australia,Bundaberg,-24.85,152.3500061,7,,,,,,,
+Australia,Port Macquarie,-31.4333333,152.9166718,-9999,,,,,,,
+Australia,Mildura,-34.2,142.1499939,60,,,,,,,
+Australia,Hobart,-42.9166667,147.3333282,151,,,,,,,
+Australia,Torquay,-25.2833333,152.8666687,-9999,,,,,,,
+Australia,Mooloolaba,-26.6833333,153.1166687,-9999,,,,,,,
+Australia,Taree,-31.9,152.4666595,56,,,,,,,
+Australia,Cranbourne,-38.1,145.2833405,1,,,,,,,
+Australia,Caloundra,-26.8,153.1333313,1,,,,,,,
+Australia,Tamworth,-31.1,150.9333344,545,,,,,,,
+Australia,Kalgoorlie,-30.75,121.4666672,469,,,,,,,
+Australia,Shepparton,-36.3833333,145.3999939,132,,,,,,,
+Australia,Melton,-37.6833333,144.5833282,128,,,,,,,
+Australia,Queanbeyan,-35.35,149.2333374,609,,,,,,,
+Australia,Wodonga,-36.1166667,146.8833313,153,,,,,,,
+Australia,Lismore,-28.8135438,153.277298,130,,,,,,,
+Australia,Gladstone,-23.85,151.25,1,,,,,,,
+Australia,Orange,-33.2833333,149.1000061,652,,,,,,,
+Australia,Warrnambool,-38.3833333,142.4833374,1,,,,,,,
+Australia,Sunbury,-37.5833333,144.7333374,197,,,,,,,
+Australia,Dubbo,-32.25,148.6166687,304,,,,,,,
+Australia,Geraldton,-28.7666667,114.5999985,2,,,,,,,
+Australia,Bunbury,-33.3333333,115.6333313,1,,,,,,,
+Australia,Alice Springs,-23.7,133.8833313,609,,,,,,,
+Australia,Palmerston,-12.4860237,130.9832916,6,,,,,,,
+Australia,Albany,-35.0169444,117.8916702,85,,,,,,,
+Australia,Mount Gambier,-37.8333333,140.7666626,82,,,,,,,
+Australia,Armidale,-30.5166667,151.6499939,1014,,,,,,,
+Australia,Mount Isa,-20.7333333,139.5,438,,,,,,,
+Australia,Caboolture,-27.0833333,152.9499969,66,,,,,,,
+Australia,Goulburn,-34.75,149.7166595,563,,,,,,,
+Australia,Mornington,-38.2166667,145.0333405,1,,,,,,,
+Australia,Maryborough,-25.5333333,152.6999969,4,,,,,,,
+Australia,Kwinana,-32.25,115.7666702,24,,,,,,,
+Australia,Burnie,-41.0666667,145.9166718,1,,,,,,,
+Australia,Brunswick,-37.7666667,144.9666595,129,,,,,,,
+Australia,Craigieburn,-37.6,144.9499969,156,,,,,,,
+Australia,Whyalla,-33.0333333,137.5833282,1,,,,,,,
+Australia,Echuca,-36.1333333,144.75,73,,,,,,,
+Australia,Devonport,-41.1666667,146.3500061,1,,,,,,,
+Australia,Roebourne,-20.7833333,117.1333313,11,,,,,,,
+Australia,Hornsby,-33.7,151.1000061,163,,,,,,,
+Australia,Katoomba,-33.7,150.3000031,720,,,,,,,
+Australia,Surfers Paradise,-28.0027378,153.4299927,1,,,,,,,
+Australia,Traralgon,-38.1833333,146.5333405,119,,,,,,,
+Australia,Murray Bridge,-35.1166667,139.2666626,10,,,,,,,
+Australia,Nerang,-27.9833333,153.3333282,49,,,,,,,
+Australia,Forster,-32.1666667,152.5166626,-9999,,,,,,,
+Australia,Broken Hill,-31.95,141.4333344,305,,,,,,,
+Australia,Karratha,-20.7291441,116.8547058,1,,,,,,,
+Australia,South Grafton,-29.7,152.9499969,78,,,,,,,
+Australia,Cessnock,-32.8333333,151.3500061,152,,,,,,,
+Australia,Gawler,-34.6,138.7333374,72,,,,,,,
+Australia,Deception Bay,-27.2,153.0333405,3,,,,,,,
+Australia,Griffith,-34.2833333,146.0333405,117,,,,,,,
+Australia,Buderim,-26.6833333,153.0500031,43,,,,,,,
+Australia,Nambour,-26.6333333,152.9499969,139,,,,,,,
+Australia,Crafers,-35,138.6999969,303,,,,,,,
+Australia,Sawtell,-30.3833333,153.1000061,-9999,,,,,,,
+Australia,Kingston,-42.9666667,147.3166656,23,,,,,,,
+Australia,Port Hedland,-20.3166667,118.5666656,-9999,,,,,,,
+Australia,Ballina,-28.8666667,153.5666656,1,,,,,,,
+Australia,Wangaratta,-36.3666667,146.3333282,148,,,,,,,
+Australia,Port Augusta,-32.5,137.7666626,7,,,,,,,
+Australia,Singleton,-32.5666667,151.1833344,154,,,,,,,
+Australia,Cleveland,-27.5333333,153.2666626,1,,,,,,,
+Australia,Bongaree,-27.0797222,153.1586151,1,,,,,,,
+Australia,Raymond Terrace,-32.75,151.75,7,,,,,,,
+Australia,Bacchus Marsh,-37.6833333,144.4499969,129,,,,,,,
+Australia,Broome,-17.9666667,122.2333298,-9999,,,,,,,
+Australia,Moe,-38.1666667,146.2666626,150,,,,,,,
+Australia,Sale,-38.1,147.0666656,37,,,,,,,
+Australia,Horsham,-36.7166667,142.1999969,116,,,,,,,
+Australia,Warwick,-28.2333333,152.0166626,555,,,,,,,

@@ -19,6 +19,7 @@
 #include <TimeLord.h>
 // #include "sun_moon_time.h"
 #include "RTClib.h"
+#include "encoder.hpp"
 
 // Pins
 #define PIN_ENC_A 7
@@ -32,9 +33,9 @@
 #define INVERT false
 
 // Encoder states
-#define ENC_SAME 0
-#define ENC_INC 1
-#define ENC_DEC 2
+//#define ENC_SAME 0
+//#define ENC_INC 1
+//#define ENC_DEC 2
 
 // Menu states
 #define STATE_MAIN_MENU 0x01
@@ -72,6 +73,8 @@ float const LONGITUDE = 147.3333282;
 
 TimeLord tardis;
 
+Encoder encoder(PIN_ENC_A, PIN_ENC_B, PIN_ENC_BTN);
+
 //byte * today; 
 
 
@@ -103,7 +106,7 @@ void setup(){
   }
 
   // comment out to set time and date
- //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   
   // setup piezo
   
@@ -161,31 +164,6 @@ void setup(){
      
   showMenu();
   
-}
-inline int encoderPosRead(){
-  lastEncoderPos = encoderPos;
-  n = digitalRead(PIN_ENC_A);
-   if ((encoderPinALast == LOW) && (n == HIGH)) {
-     if (digitalRead(PIN_ENC_B) == LOW) {
-       encoderPos--;
-     } else {
-       encoderPos++;
-     }
-     Serial.print (encoderPos);
-     Serial.println ("/");
-   } 
-   encoderPinALast = n;
-    if(encoderPos == lastEncoderPos){
-      return ENC_SAME;
-    } else if (encoderPos > lastEncoderPos){
-      Serial.println("Inc");
-      
-      return ENC_INC;
-    } else if (encoderPos < lastEncoderPos){
-      Serial.println("Dec");
-      return ENC_DEC;
-    }
-   return ENC_SAME;
 }
 
 void showMenu(){
@@ -267,11 +245,12 @@ void changeTimeLoop(){
     }
     // TODO: change date/time loop
   }
-  int encoderPosState = encoderPosRead();
-  if(encoderPosState == ENC_INC){
+  
+  encState eState = encoder.read();
+  if(eState == ENC_INC){
     datetimeState = STATE_DATE_SET;
     showChangeTimeMenu();
-  } else if (encoderPosState == ENC_DEC) {
+  } else if (eState == ENC_DEC) {
     datetimeState = STATE_TIME_SET;
     showChangeTimeMenu2();
   }
@@ -289,8 +268,8 @@ void showChangeTimeMenu2(){
 }
 
 void mainMenuLoop(){
-  int encoderPosState = encoderPosRead();
-  if(encoderPosState == ENC_INC){
+  encState eState = encoder.read();
+  if(eState == ENC_DEC){
     if (menuPos == 0){
       menuPos = MENU_COUNT - 1;
     } else {
@@ -299,7 +278,7 @@ void mainMenuLoop(){
     Serial.print("Menu item: ");
     Serial.println(menuPos);
     showMenu();
-  } else if (encoderPosState == ENC_DEC) {
+  } else if (eState == ENC_INC) {
     menuPos = (menuPos + 1) % (MENU_COUNT);
     Serial.print("Menu item: ");
     Serial.println(menuPos);

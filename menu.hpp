@@ -4,7 +4,6 @@
 #include <LiquidCrystal.h>
 #include "encoder.hpp"
 #include "RTClib.h"
-#include <TimeLord.h>
 typedef enum MenuState {
   STATE_IDLE = 0x00,
   STATE_MAIN = 0x01,
@@ -19,7 +18,7 @@ private:
   menuState mState;
   LiquidCrystal * lcd;
   RTC_DS1307 * rtc;
-  Encoder encoder;
+  Encoder * encoder;
   int menuCount;
   int menuPos;
 
@@ -33,6 +32,8 @@ private:
   void drawIdleScreen();
   void drawMainScreen();
   void drawRegisteredScreen();
+
+  DateTime rtcTime;
   
 public:
 
@@ -40,7 +41,7 @@ public:
 
   void registerMenu(char * title, callback_void func);
 
-  void readInput();
+  void update();
 
   void draw();
   

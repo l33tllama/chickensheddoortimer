@@ -11,9 +11,9 @@ Encoder::Encoder(unsigned int enc_a_pin, unsigned int enc_b_pin, unsigned int en
   pinMode(enc_b_pin, INPUT);
   pinMode(enc_btn_pin, INPUT);
 
-  PIN_ENC_A = enc_a_pin;
-  PIN_ENC_B = enc_b_pin;
-  PIN_BTN = enc_btn_pin;
+  _enc_a_pin = enc_a_pin;
+  _enc_b_pin = enc_b_pin;
+  _enc_btn_pin = enc_btn_pin;
 
   encoderPos = 0;
   lastEncoderPos = 0;
@@ -23,9 +23,10 @@ Encoder::Encoder(unsigned int enc_a_pin, unsigned int enc_b_pin, unsigned int en
 
 encState Encoder::read(){
   lastEncoderPos = encoderPos;
-  n = digitalRead(PIN_ENC_A);
-   if ((encoderPinALast == LOW) && (n == HIGH)) {
-     if (digitalRead(PIN_ENC_B) == LOW) {
+  //Serial.println("Reading encoder..");
+  n = digitalRead(_enc_a_pin);
+  if ((encoderPinALast == LOW) && (n == HIGH)) {
+    if (digitalRead(_enc_b_pin) == LOW) {
        encoderPos--;
      } else {
        encoderPos++;

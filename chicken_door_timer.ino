@@ -20,6 +20,7 @@
 // #include "sun_moon_time.h"
 #include "RTClib.h"
 #include "encoder.hpp"
+#include "menu.hpp"
 
 // Pins
 #define PIN_ENC_A 7
@@ -53,7 +54,7 @@ int lastEncoderPos = 0;
 int encoderPinALast = LOW;
 int n = LOW;
 int menuPos = 0;
-int menuState = STATE_MAIN_MENU;
+//int menuState = STATE_MAIN_MENU;
 int datetimeState = STATE_DATE_SET;
 
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", 
@@ -68,6 +69,8 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 RTC_DS1307 rtc;
 
+
+
 float const LATITUDE = -42.9166667;
 float const LONGITUDE = 147.3333282;
 
@@ -77,7 +80,7 @@ Encoder encoder(PIN_ENC_A, PIN_ENC_B, PIN_ENC_BTN);
 
 //byte * today; 
 
-
+Menu menu(&lcd, &encoder);
 //struct tm * time_from_rtc;
 //time_t * rtc_time;
 
@@ -111,18 +114,20 @@ void setup(){
   // setup piezo
   
   // setup rotary encoder
-  pinMode(PIN_ENC_A, INPUT);
-  pinMode(PIN_ENC_B, INPUT);  
+  //pinMode(PIN_ENC_A, INPUT);
+  //pinMode(PIN_ENC_B, INPUT);  
   
   // setup serial
   Serial.begin(9600);
-  
+
+  // Splash to remind the user who made this!
   lcd.print("Door Timer ");
   lcd.setCursor(0, 1);
   lcd.print("by Leo Febey");
   delay(100);
   lcd.clear();
 
+  // Date testing using Datetime from RTC library
   DateTime now = rtc.now();
 
   Serial.print("Date: ");
@@ -162,7 +167,7 @@ void setup(){
   }
   Serial.println(); 
      
-  showMenu();
+  //showMenu();
   
 }
 
@@ -191,6 +196,7 @@ void showMenu(){
 }
 
 void checkMainMenuButonPress(){
+  /*
   menuButton.read();
   if(menuButton.wasReleased()){
     Serial.println("Menu button pressed.. once..?");
@@ -217,7 +223,7 @@ void checkMainMenuButonPress(){
         Serial.println(menuPos);
         break;
     }
-  }
+  } */
 }
 
 void showManualControlMenu(){
@@ -288,7 +294,8 @@ void mainMenuLoop(){
 }
   
 void loop(){
-
+  menu.update();
+  /*
   switch (menuState){
     case STATE_MAIN_MENU:
       mainMenuLoop();
@@ -306,6 +313,6 @@ void loop(){
     case STATE_DATETIME_SET:
       changeTimeLoop();
       break;
-  } 
+  } */
   __asm__ volatile("nop");
 }

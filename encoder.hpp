@@ -14,9 +14,9 @@ private:
   int lastEncoderPos;
   unsigned int encoderPinALast;
   unsigned int n;
-  unsigned int PIN_ENC_A;
-  unsigned int PIN_ENC_B;
-  unsigned int PIN_BTN;
+  unsigned int _enc_a_pin;
+  unsigned int _enc_b_pin;
+  unsigned int _enc_btn_pin;
 
 public:
   Encoder();

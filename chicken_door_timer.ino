@@ -11,7 +11,7 @@
  *  9 - Piezo
  *  10 - unused (PWM!)
  *  11, 12 - LCD
- *  13 - unused
+ *  13 - unused (motor dir?)
  */
 #include <LiquidCrystal.h>
 #include <Wire.h>
@@ -21,6 +21,7 @@
 #include "RTClib.h"
 #include "encoder.hpp"
 #include "menu.hpp"
+#include "submenu.hpp"
 
 // Pins
 #define PIN_ENC_A 7
@@ -69,7 +70,7 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 RTC_DS1307 rtc;
 
-
+typedef void (*callback_void)(void);
 
 float const LATITUDE = -42.9166667;
 float const LONGITUDE = 147.3333282;
@@ -80,7 +81,7 @@ Encoder encoder(PIN_ENC_A, PIN_ENC_B, PIN_ENC_BTN);
 
 //byte * today; 
 
-Menu menu(&lcd, &encoder);
+Menu menu(&lcd, &encoder, &menuButton);
 //struct tm * time_from_rtc;
 //time_t * rtc_time;
 
@@ -91,6 +92,10 @@ Menu menu(&lcd, &encoder);
 // * check close time - later add override
 // * set date + time
 // * set timezone (by GMT) - later by country and state..
+
+callback_void * toggleDoor(){
+  Serial.println("This would open/close the door..");
+}
 
 void setup(){
   
@@ -168,6 +173,15 @@ void setup(){
   Serial.println(); 
      
   //showMenu();
+  SubMenu manualControl = SubMenu(&lcd, &encoder, &menuButton);
+  manualControl.addText("Manual Door Ctrl");
+  manualControl.addOnOffSwitch(*(toggleDoor()));
+  
+  menu.registerMenu("Manual Control", &manualControl);
+  menu.registerMenu("Open Time", NULL);
+  menu.registerMenu("Close Time", NULL);
+  menu.registerMenu("Set timezone", NULL);
+  
   
 }
 

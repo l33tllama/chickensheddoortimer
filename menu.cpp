@@ -1,20 +1,22 @@
 #include "menu.hpp"
 #include <Arduino.h>
 
-Menu::Menu(LiquidCrystal * _lcd, Encoder * _encoder){
+Menu::Menu(LiquidCrystal * _lcd, Encoder * _encoder, Button * _menuButton){
   lcd = _lcd;
   mState = STATE_IDLE;
   encoder = _encoder;
+  menuButton = _menuButton;
   lcd->clear();
   menuCount = 0;
+  subMenus = (SubMenu *) malloc(sizeof(SubMenu) * MAX_MENUS);
 }
 
 // TODO: change to submenu class/object or functions defined in here
-void Menu::registerMenu(char * title, callback_void func){
+void Menu::registerMenu(char * title, SubMenu * subMenu){
   memcpy(menuItems[menuCount], title, strlen(title));
-  menu_callbacks[menuCount] = func;
+  memcpy(&subMenus[menuCount], subMenu, sizeof(SubMenu));
   menuCount++;
-} 
+}
 
 void Menu::update(){
   switch(mState){
@@ -62,6 +64,13 @@ void Menu::drawIdleScreen(){
 }
 
 void Menu::updateMainScreen(){
+  menuButton->read();
+  
+  if(menuButton->wasReleased()){
+    Serial.print("Entering a submenu..");
+    mState = STATE_SUBMENU;
+  }
+  
   encState eState = encoder->read();
   if(eState == ENC_DEC){
     if (menuPos == 0){
